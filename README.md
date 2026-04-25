@@ -16,8 +16,73 @@ STEP-4: Else subtract the key from the plain text.
 STEP-5: Display the cipher text obtained above.
 
 ## PROGRAM:
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+void caesar_encrypt(char text[], int key, char result[]) {
+    for (int i = 0; text[i] != '\0'; i++) {
+        char ch = text[i];
+
+        if (isupper(ch)) {
+            result[i] = ((ch - 'A' + key) % 26) + 'A';
+        }
+        else if (islower(ch)) {
+            result[i] = ((ch - 'a' + key) % 26) + 'a';
+        }
+        else {
+            result[i] = ch;
+        }
+    }
+    result[strlen(text)] = '\0';
+}
+
+void caesar_decrypt(char text[], int key, char result[]) {
+    for (int i = 0; text[i] != '\0'; i++) {
+        char ch = text[i];
+
+        if (isupper(ch)) {
+            result[i] = ((ch - 'A' - key + 26) % 26) + 'A';
+        }
+        else if (islower(ch)) {
+            result[i] = ((ch - 'a' - key + 26) % 26) + 'a';
+        }
+        else {
+            result[i] = ch;
+        }
+    }
+    result[strlen(text)] = '\0';
+}
+
+int main() {
+    char plain[100], cipher[100], decrypted[100];
+    int key;
+
+    printf("Enter the plain text: ");
+    fgets(plain, sizeof(plain), stdin);
+
+    // Remove newline from fgets
+    plain[strcspn(plain, "\n")] = '\0';
+
+    printf("Enter the key value: ");
+    scanf("%d", &key);
+
+    printf("\nPLAIN TEXT: %s\n", plain);
+
+    caesar_encrypt(plain, key, cipher);
+    printf("ENCRYPTED TEXT: %s\n", cipher);
+
+    caesar_decrypt(cipher, key, decrypted);
+    printf("DECRYPTED TEXT: %s\n", decrypted);
+
+    return 0;
+}
+```
 
 ## OUTPUT:
+<img width="815" height="286" alt="image" src="https://github.com/user-attachments/assets/cdbbcab0-a7c5-4167-9d56-210f78680c33" />
+
 
 ## RESULT :
  Thus the implementation of ceasar cipher had been executed successfully.
